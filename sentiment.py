@@ -86,7 +86,7 @@ for i in range(0, len(df)):
 
 
 cv = CountVectorizer(max_features=2500)
-X = cv.fit_transform(corpus).toarray()
+X = cv.fit(corpus).toarray()
 
 
 # loading the saved model
@@ -99,7 +99,7 @@ loaded_model = pickle.load(open('model.sav', 'rb'))
 def kmeanssentimentanalysis(X,loaded_model):
     k = 3
     kmeans = KMeans(n_clusters=k)
-    cluster_labels = loaded_model.predict(X)
+    cluster_labels = loaded_model.fit_predict(X)
     cluster_sentiments = {
     0: "positive",
     1: "negative",
