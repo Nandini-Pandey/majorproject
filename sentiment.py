@@ -86,7 +86,7 @@ for i in range(0, len(df)):
 
 
 cv = CountVectorizer(max_features=2500)
-X = cv.fit(corpus).toarray()
+X = cv.fit_transform(corpus).toarray()
 
 
 # loading the saved model
