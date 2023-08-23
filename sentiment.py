@@ -107,14 +107,12 @@ loaded_model = pickle.load(open('model.sav', 'rb'))
 def kmeanssentimentanalysis(X,loaded_model):
     k = 3
     kmeans = KMeans(n_clusters=k)
-    cluster_labels = loaded_model.fit_predict(X)
+    cluster_labels = loaded_model.predict(X)
     cluster_sentiments = {
     0: "positive",
     1: "negative",
     2: "neutral"
     }
-    # Print cluster labels
-    print(cluster_labels)
     # Assign sentiments to sentences based on cluster labels
     sentiment_predictions = [cluster_sentiments[label] for label in cluster_labels]
     return sentiment_predictions
