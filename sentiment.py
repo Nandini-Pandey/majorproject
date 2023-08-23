@@ -104,7 +104,7 @@ loaded_model = pickle.load(open('model.sav', 'rb'))
 
 
 # Perform K-Means clustering
-def kmeanssentimentanalysis():
+def kmeanssentimentanalysis(X,loaded_model):
     k = 3
     kmeans = KMeans(n_clusters=k)
     cluster_labels = loaded_model.fit_predict(X)
@@ -113,11 +113,6 @@ def kmeanssentimentanalysis():
     1: "negative",
     2: "neutral"
     }
-
-    # Ensure the 'n_init' parameter is an integer
-    if not isinstance(loaded_model.n_init, int):
-        raise ValueError("'n_init' parameter should be an integer")
-
     # Print cluster labels
     print(cluster_labels)
     # Assign sentiments to sentences based on cluster labels
@@ -172,7 +167,7 @@ def main():
     st.text("KMeans or nltk ")
     prediction=''
     if st.button("KMeans"):
-        prediction= kmeanssentimentanalysis()
+        prediction= kmeanssentimentanalysis(X,loaded_model)
         st.success("Sentiment prediction")
         st.write(prediction)    
 
