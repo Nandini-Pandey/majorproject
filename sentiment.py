@@ -85,28 +85,9 @@ for i in range(0, len(df)):
     corpus.append(review)
 
 
-# Fit the CountVectorizer with the training data
 cv = CountVectorizer(max_features=2500)
-X = cv.fit_transform(corpus).toarray()  # Fit with the training data corpus
+X = cv.fit_transform(corpus).toarray()
 
-# Lemmatization and preprocessing during inference
-corpus_inference = []
-
-# Lemmatization and preprocessing during inference
-corpus_inference = []
-for i in range(0, len(df)):
-    review = re.sub('[^a-zA-Z]', ' ', df['title'][i])
-    review = review.lower()
-    review = review.split()
-
-    review = [lemmatizer.lemmatize(word) for word in review if not word in stopwords.words('english')]
-    review = ' '.join(review)
-    corpus_inference.append(review)
-
-
-
-# Transform the preprocessed text using the same CountVectorizer
-X_inference = cv.transform(corpus_inference).toarray()
 
 # loading the saved model
 loaded_model = pickle.load(open('model.sav', 'rb'))
