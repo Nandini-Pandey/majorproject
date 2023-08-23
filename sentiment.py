@@ -152,11 +152,10 @@ def main():
 
     st.text("This project is about predicting the sentiments of financial news headlines viz. ")
     st.text(" positive(0), negative(1) and neutral(2).")
-    st.text("The news headlines of 4 tech giants Google,Amazon,Netflix and Apple were scraped")
-    st.text("from finviz using python library BeautifulSoup.")
+    st.text("The real timen financial news headlines of 4 tech giants Google,Amazon,Netflix ")
+    st.text("and Apple were scraped from finviz using python library BeautifulSoup.")
     st.text("Sentiment analysis has been done using two techniques : KMeans and nltk library. ")
-    st.text("User can choose the company whose financial news sentiments he/she wants") 
-    st.text("to predict and also by which technique.")
+    st.text("User can choose the technique by which they want to see the prediction of sentiment. ") 
 
     if st.button("View dataframe"):
         df=pd.DataFrame(parsed_data,columns=['ticker','date','time','title'])
