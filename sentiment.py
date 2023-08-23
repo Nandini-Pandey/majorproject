@@ -11,6 +11,8 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 
+from sklearn.feature_extraction.text import CountVectorizer
+
 
 
 
@@ -71,7 +73,24 @@ lemmatizer = WordNetLemmatizer()
 print(df['title'])
 corpus=[]
 
+# Lemmatization
+for i in range(0, len(df)):
+    review = re.sub('[^a-zA-Z]', ' ', df['title'][i])
+    review = review.lower()
+    review = review.split()
 
+    review = [lemmatizer.lemmatize(word) for word in review if not word in stopwords.words('english')]
+    review = ' '.join(review)
+    print(review)  # Add this line to see the preprocessed review
+    corpus.append(review)
+
+
+# Fit the CountVectorizer with the training data
+cv = CountVectorizer(max_features=2500)
+X = cv.fit_transform(corpus).toarray()  # Fit with the training data corpus
+
+# Lemmatization and preprocessing during inference
+corpus_inference = []
 
 # Lemmatization and preprocessing during inference
 corpus_inference = []
@@ -85,10 +104,6 @@ for i in range(0, len(df)):
     corpus_inference.append(review)
 
 
-from sklearn.feature_extraction.text import CountVectorizer
-
-cv = CountVectorizer(max_features=2500)
-
 
 # Transform the preprocessed text using the same CountVectorizer
 X_inference = cv.transform(corpus_inference).toarray()
@@ -100,10 +115,10 @@ loaded_model = pickle.load(open('model.sav', 'rb'))
 
 
 # Perform K-Means clustering
-def kmeanssentimentanalysis(X_inference,loaded_model):
+def kmeanssentimentanalysis(X,loaded_model):
     k = 3
     kmeans = KMeans(n_clusters=k)
-    cluster_labels = loaded_model.predict(X_inference)
+    cluster_labels = loaded_model.predict(X)
     cluster_sentiments = {
     0: "positive",
     1: "negative",
@@ -161,7 +176,7 @@ def main():
     st.text("KMeans or nltk ")
     prediction=''
     if st.button("KMeans"):
-        prediction= kmeanssentimentanalysis(X_inference,loaded_model)
+        prediction= kmeanssentimentanalysis(X,loaded_model)
         st.success("Sentiment prediction")
         st.write(prediction)    
 
@@ -170,13 +185,6 @@ def main():
         st.success('Sentiment Prediction')
         st.write(prediction)
         
-    
-
-        
-
-    
-
-    
 
     
 if __name__=='__main__':
