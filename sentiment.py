@@ -99,7 +99,8 @@ X = cv.fit_transform(corpus).toarray()
 
 
 # loading the saved model
-loaded_model=pickle.load(open('C:/Users/NANDINI PANDEY/Desktop/Streamlitnew/model.sav','rb'))
+loaded_model = pickle.load(open('model.sav', 'rb'))
+
 
 
 # Perform K-Means clustering
