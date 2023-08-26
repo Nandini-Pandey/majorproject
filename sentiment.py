@@ -11,8 +11,6 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 
-from sklearn.feature_extraction.text import CountVectorizer
-
 
 
 
@@ -73,6 +71,11 @@ lemmatizer = WordNetLemmatizer()
 print(df['title'])
 corpus=[]
 
+
+
+
+
+
 # Lemmatization
 for i in range(0, len(df)):
     review = re.sub('[^a-zA-Z]', ' ', df['title'][i])
@@ -85,18 +88,22 @@ for i in range(0, len(df)):
     corpus.append(review)
 
 
+
+
+
+from sklearn.feature_extraction.text import CountVectorizer
+
 cv = CountVectorizer(max_features=2500)
 X = cv.fit_transform(corpus).toarray()
+
 
 
 # loading the saved model
 loaded_model = pickle.load(open('model.sav', 'rb'))
 
 
-
-
 # Perform K-Means clustering
-def kmeanssentimentanalysis(X,loaded_model):
+def kmeanssentimentanalysis():
     k = 3
     kmeans = KMeans(n_clusters=k)
     cluster_labels = loaded_model.fit_predict(X)
@@ -105,6 +112,8 @@ def kmeanssentimentanalysis(X,loaded_model):
     1: "negative",
     2: "neutral"
     }
+    # Print cluster labels
+    print(cluster_labels)
     # Assign sentiments to sentences based on cluster labels
     sentiment_predictions = [cluster_sentiments[label] for label in cluster_labels]
     return sentiment_predictions
@@ -137,29 +146,31 @@ def nltksentimentanalysis(data):
 
 
 
+
 def main():
     st.markdown('<h1 style="color:dark blue;">Sentiment Analysis of financial news of big technology companies</h1>', unsafe_allow_html=True)
     st.image("https://upload.wikimedia.org/wikipedia/commons/4/44/Investors_News_tips_-_Stock_Market_Quotes_%26_Financial_News.jpg", caption="Image from Wikimedia Commons")
 
     st.text("This project is about predicting the sentiments of financial news headlines viz. ")
     st.text(" positive(0), negative(1) and neutral(2).")
-    st.text("The real timen financial news headlines of 4 tech giants Google,Amazon,Netflix ")
-    st.text("and Apple were scraped from finviz using python library BeautifulSoup.")
-    st.text("Sentiment analysis has been done using two techniques : KMeans and nltk library. ")
+    st.text("The real time financial news headlines of 4 tech giants Google,Amazon,Netflix ")
+    st.text("and Apple are scraped from finviz using python library BeautifulSoup.")
+    st.text("Sentiment analysis has been done using two techniques : Kmeans and nltk library. ")
     st.text("User can choose the technique by which they want to see the prediction of sentiment. ") 
 
     if st.button("View dataframe"):
         df=pd.DataFrame(parsed_data,columns=['ticker','date','time','title'])
-        st.dataframe(df[['ticker','date','title']])
+        st.dataframe(df[['ticker','date','time','title']])
 
     
     st.text("Choose the technique using which you wish to do the sentiment analysis --> ") 
-    st.text("KMeans or nltk ")
+    st.text("Kmeans or nltk ")
     prediction=''
     if st.button("KMeans"):
-        prediction= kmeanssentimentanalysis(X,loaded_model)
+        prediction= kmeanssentimentanalysis()
         st.success("Sentiment prediction")
         st.write(prediction)    
+
 
     elif (st.button("nltk")):
         prediction= nltksentimentanalysis(corpus)
@@ -170,3 +181,6 @@ def main():
     
 if __name__=='__main__':
     main()
+
+
+
