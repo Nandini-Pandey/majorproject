@@ -103,22 +103,24 @@ loaded_model = pickle.load(open('model.sav', 'rb'))
 
 
 # Perform K-Means clustering
-def kmeanssentimentanalysis():
+def kmeanssentimentanalysis(data):
     k = 3
     kmeans = KMeans(n_clusters=k)
-    cluster_labels = loaded_model.fit_predict(X)
+    
+    # Transform the input data using the same CountVectorizer used for training
+    X = cv.transform(data).toarray()
+
+    cluster_labels = kmeans.fit_predict(X)
     cluster_sentiments = {
-    0: "positive",
-    1: "negative",
-    2: "neutral"
+        0: "positive",
+        1: "negative",
+        2: "neutral"
     }
-    # Print cluster labels
-    print(cluster_labels)
+    
     # Assign sentiments to sentences based on cluster labels
     sentiment_predictions = [cluster_sentiments[label] for label in cluster_labels]
     return sentiment_predictions
-    
-    
+
     
 
 #using nltk
@@ -165,11 +167,13 @@ def main():
     
     st.text("Choose the technique using which you wish to do the sentiment analysis --> ") 
     st.text("Kmeans or nltk ")
-    prediction=''
+    prediction=' '
+
     if st.button("KMeans"):
-        prediction= kmeanssentimentanalysis()
-        st.success("Sentiment prediction")
-        st.write(prediction)    
+        prediction = kmeanssentimentanalysis(corpus)
+        st.success("Sentiment prediction using KMeans")
+        st.write(prediction)
+   
 
 
     elif (st.button("nltk")):
