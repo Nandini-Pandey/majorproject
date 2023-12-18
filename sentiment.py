@@ -165,25 +165,20 @@ def main():
         st.dataframe(df[['ticker','date','time','title']])
 
     
-    st.text("Choose the technique using which you wish to do the sentiment analysis --> ") 
-    st.text("Kmeans or nltk ")
-    prediction=' '
+    st.sidebar.subheader("Choose Sentiment Analysis Technique:")
+    technique = st.sidebar.radio("", ["KMeans", "NLTK"])
 
-    if st.button("KMeans"):
-        prediction = kmeanssentimentanalysis(corpus)
-        st.success("Sentiment prediction using KMeans")
-        st.write(prediction)
-   
+    if st.button("Analyze Sentiments"):
+        if technique == "KMeans":
+            prediction = kmeanssentimentanalysis(corpus)
+            st.success("Sentiment prediction using KMeans")
+            st.write(prediction)
+        elif technique == "NLTK":
+            prediction = nltksentimentanalysis(corpus)
+            st.success('Sentiment Prediction using NLTK')
+            st.write(prediction)
 
-
-    elif (st.button("nltk")):
-        prediction= nltksentimentanalysis(corpus)
-        st.success('Sentiment Prediction')
-        st.write(prediction)
-        
-
-    
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
 
 
