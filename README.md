@@ -35,7 +35,7 @@ Sentiment scores are calculated, and headlines are classified as positive, negat
 ## Demo
 
 
-See webapp demo here : sentimentprediction.onrender.com
+https://financialsentimentprediction.onrender.com/
 
 
 
