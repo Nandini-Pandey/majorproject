@@ -3,7 +3,7 @@
 
 ## Overview
 
-This project performs sentiment analysis on financial news headlines related to big technology companies, specifically Google, Amazon, Netflix, and Apple. Two techniques, KMeans clustering and NLTK library, are employed to predict sentiments (positive, negative, and neutral).
+This project performs sentiment analysis on financial news headlines related to big technology companies, specifically Google, Amazon, Netflix, and Apple. The techniques , KMeans clustering, LSTM RNN and NLTK library, are employed to predict sentiments (positive, negative, and neutral).
 
 
 ### Data Collection
@@ -18,15 +18,21 @@ The headlines undergo preprocessing steps, including lemmatization and removal o
 ### Analysis Techniques
 
 
-### *KMeans Clustering* :
+#### *KMeans Clustering* :
 
 The CountVectorizer is used to convert the text data into a matrix of token counts.
 A pre-trained KMeans model is loaded, and sentiment predictions are made based on the clusters.
 
-### *NLTK Library* :
+#### *NLTK Library* :
 
 The NLTK library, specifically the VADER sentiment analyzer, is used for sentiment analysis.
 Sentiment scores are calculated, and headlines are classified as positive, negative, or neutral.
+
+
+
+#### LSTM Recurrent Neural Network (RNN):
+
+An LSTM RNN model is trained on the preprocessed data for more advanced sentiment analysis. The model predicts sentiments as positive, negative, or neutral based on the learned patterns in the text data.
 
 
 
