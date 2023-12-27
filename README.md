@@ -32,10 +32,14 @@ Sentiment scores are calculated, and headlines are classified as positive, negat
 
 #### LSTM Recurrent Neural Network (RNN):
 
-An LSTM RNN model is trained on the preprocessed data for more advanced sentiment analysis. The model predicts sentiments as positive, negative, or neutral based on the learned patterns in the text data.
+An LSTM RNN model is trained on the preprocessed data for more advanced sentiment analysis. The model predicts sentiments as positive, negative, or neutral based on the learned patterns in the text data from K-Means clustering's output thus validating its predictions.
 
 
 
+
+
+#### Note
+The demo of the webapp only supports predictions of K-Means clustering and NLTK as of now. The work is in progress for adding LSTM RNN as well in the webapp.
 
 
 ## Demo
